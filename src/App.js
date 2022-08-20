@@ -31,6 +31,10 @@ const App = () => {
     setStoryList(storyList.slice(0, -1));
   };
 
+  const resetList = () => {
+    setStoryList(stories)
+  };
+
   return (
     <div>
       <h1>My Hacker Stories</h1>
@@ -47,6 +51,9 @@ const App = () => {
       <List list={storyList} />
       <button type="submit" onClick={removeItem}>
         pop
+      </button>
+      <button type="submit" onClick={resetList}>
+        reset
       </button>
     </div>
   );
