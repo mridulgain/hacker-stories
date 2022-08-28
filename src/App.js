@@ -1,70 +1,81 @@
-import * as React from 'react';
+import './App.css';
+import * as React from 'react'
 
 const App = () => {
-  const stories = [
+  const list = [
     {
-      title: 'React',
-      url: 'https://reactjs.org/',
-      author: 'Jordan Walke',
-      num_comments: 3,
-      points: 4,
-      objectID: 0
+      id: '1',
+      name: 'Jordan Walke',
+      class: 3,
+      roll_number: 4,
+      marks: 95,
     },
     {
-      title: 'Redux',
-      url: 'https://redux.js.org/',
-      author: 'Dan Abramov, Andrew Clark',
-      num_comments: 2,
-      points: 5,
-      objectID: 1
-    }
+      id: '2',
+      name: 'Dan Abramov',
+      class: 2,
+      roll_number: 5,
+      marks: 97,
+    },
+    {
+      id: '3',
+      name: 'abhi',
+      class: 3,
+      roll_number: 6,
+      marks: 95,
+    },
+    {
+      id: '4',
+      name: 'rohan',
+      class: 2,
+      roll_number: 7,
+      marks: 97,
+    },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const [storyList, setStoryList] = React.useState(stories);
+  let [currentList, updateList] = React.useState(list)
 
-  const handleChanger = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  const deleteStudent = (event) => {  
+    console.log("deleteing: ", event.target.value)
+    let newList = []
+    for(let i = 0, j = 0; i < currentList.length; i++){
+      if(i == event.target.value){
+        console.log("skip ",i)
+        continue
+      }
+      else{
+        newList[j] = currentList[i]
+        j++
+      }
+    }
+    updateList(newList) 
+  }
 
-  const removeItem = (event) => {
-    setStoryList(storyList.slice(0, -1));
-  };
-
-  return (
+  return(
     <div>
-      <h1>My Hacker Stories</h1>
-
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={handleChanger} />
-
-      <p>
-        Searching for <strong>{searchTerm}</strong>.
-      </p>
-
-      <hr />
-
-      <List list={storyList} />
-      <button type="submit" onClick={removeItem}>
-        pop
-      </button>
+      <h1>LIST OF STUDENTS</h1>
+      <div>
+        <Student onRemove={deleteStudent} list={currentList}/>
+      </div>
     </div>
-  );
-};
+  )
+}
 
-const List = (props) => (
-  <ul>
-    {props.list.map((item) => (
-      <li key={item.objectID}>
-        <span>
-          <a href={item.url}>{item.title}</a>
-        </span>
-        <span>{item.author}</span>
-        <span>{item.num_comments}</span>
-        <span>{item.points}</span>
-      </li>
-    ))}
-  </ul>
-);
+const Student = (props) => {
+  return(
+  <div>
+    <ul>
+      {props.list.map( (item, index) => (
+        <li key={item.id}>
+          <p>Name: {item.name}</p>
+          <p>Class: {item.class}</p>
+          <p>Roll_number: {item.roll_number}</p>
+          <p>Marks: {item.marks}</p>
+          <button type="button" value={index} onClick={props.onRemove}>Remove</button>
+        </li>
+      ))}
+    </ul>
+  </div>
+)};
 
 export default App;
