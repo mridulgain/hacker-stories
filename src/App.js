@@ -1,65 +1,164 @@
-import React from 'react';
+import './App.css';
+import * as React from 'react'
 
 const App = () => {
-  const stories = [
+  const list = [
     {
-      title: 'React',
-      url: 'https://reactjs.org/',
-      author: 'Jordan Walke',
-      num_comments: 3,
-      points: 4,
-      objectID: 0,
+      id: '1',
+      name: 'Jordan Walke',
+      class: 3,
+      roll_number: 4,
+      marks: 95,
     },
     {
-      title: 'Redux',
-      url: 'https://redux.js.org/',
-      author: 'Dan Abramov, Andrew Clark',
-      num_comments: 2,
-      points: 5,
-      objectID: 1,
+      id: '2',
+      name: 'Dan Abramov',
+      class: 2,
+      roll_number: 5,
+      marks: 97,
+    },
+    {
+      id: '3',
+      name: 'Abhijai',
+      class: 3,
+      roll_number: 4,
+      marks: 95,
+    },
+    {
+      id: '4',
+      name: 'sarbjit',
+      class: 3,
+      roll_number: 4,
+      marks: 95,
+    },
+    {
+      id: '5',
+      name: 'guneet',
+      class: 3,
+      roll_number: 4,
+      marks: 95,
+    }
+  ];
+  const list2 = [
+    {
+      id: '1',
+      name: 'anshbir',
+      class: 3,
+      roll_number: 4,
+      marks: 95,
+    },
+    {
+      id: '2',
+      name: 'rohan',
+      class: 2,
+      roll_number: 5,
+      marks: 97,
+    },
+    {
+      id: '3',
+      name: 'sameer',
+      class: 3,
+      roll_number: 4,
+      marks: 95,
+    },
+    {
+      id: '4',
+      name: 'sam',
+      class: 2,
+      roll_number: 5,
+      marks: 97,
+    },
+    {
+      id: '5',
+      name: 'tiya',
+      class: 2,
+      roll_number: 5,
+      marks: 97,
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [count, set_count] = React.useState(0)
 
-  const handleSearch = event => {
-    setSearchTerm(event.target.value);
-  };
+  const [search, set_search] = React.useState('')
 
-  const searchedStories = stories.filter(story =>
-    story.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleSearch = (event) => {
+    set_search(event.target.value)
+  }
 
-  return (
+  let [current_list, update_list] = React.useState(list)
+
+  const deleteStudent = (event) => {
+    console.log("deleting: ", event.target.value)
+    let newList = []
+    for(let i = 0, j = 0; i < current_list.length; i++){
+      if (i == event.target.value){
+        console.log("skip ", i)
+        continue
+      }
+      else{
+        newList[j] = current_list[i]
+        j++
+      }
+    }
+    update_list(newList)
+  }
+
+  // ----------------for the second list-------------------------
+  let [current_list2, update_list2] = React.useState(list2)
+
+  const deleteStudent2 = (event) => {
+    console.log("deleting: ", event.target.value)
+    let newList2 = []
+    for(let i = 0, j = 0; i < current_list2.length; i++){
+      if (i == event.target.value){
+        console.log("skip ", i)
+        continue
+      }
+      else{
+        newList2[j] = current_list2[i]
+        j++
+      }
+    }
+    update_list2(newList2)
+  }
+
+
+  return(
     <div>
-      <h1>My Hacker Stories</h1>
+      <h1 class="heading">LIST OF STUDENTS</h1>
+      <p>You clicked {count} number of times</p>
+      <button type="button" onClick={ () => set_count(count+1)}>up the count</button>
 
-      <Search onSearch={handleSearch} />
+      <input type="text" onChange={handleSearch}></input>
 
-      <hr />
-
-      <List list={searchedStories} />
+      <p>you are search for <strong><u>{search}</u></strong></p> 
+      <div>
+        <Student onRemove={deleteStudent} list={current_list}/>
+        <hr />
+        <Student onRemove={deleteStudent2} list={current_list2}/>
+      </div>
+      <div>
+        
+      </div>
     </div>
-  );
-};
+  )
+}
 
-const Search = props => (
+const Student = (props) => {
+  return(
   <div>
-    <label htmlFor="search">Search: </label>
-    <input id="search" type="text" onChange={props.onSearch} />
+    <ul>
+      {props.list.map((item, index) => (
+        <li key={item.id}>
+          <p>Name: {item.name}</p>
+          <p>Class: {item.class}</p>
+          <p>Roll_number: {item.roll_number}</p>
+          <p>Marks: {item.marks}</p>
+          <button type="button" value={index} onClick={props.onRemove}>Remove</button>
+        </li>
+      ))}
+    </ul>
   </div>
-);
-
-const List = props =>
-  props.list.map(item => (
-    <div key={item.objectID}>
-      <span>
-        <a href={item.url}>{item.title}</a>
-      </span>
-      <span>{item.author}</span>
-      <span>{item.num_comments}</span>
-      <span>{item.points}</span>
-    </div>
-  ));
+)};
 
 export default App;
