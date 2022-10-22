@@ -93,19 +93,17 @@ const App = () => {
   }
 
   let [current_list, update_list] = React.useState(list)
-  let [current_list2, update_list2] = React.useState(list2)
 
-
-  const deleteStudent = (event, list) => {
+  const deleteStudent = (event) => {
     console.log("deleting: ", event.target.value)
     let newList = []
-    for(let i = 0, j = 0; i < list.length; i++){
+    for(let i = 0, j = 0; i < current_list.length; i++){
       if (i == event.target.value){
         console.log("skip ", i)
         continue
       }
       else{
-        newList[j] = list[i]
+        newList[j] = current_list[i]
         j++
       }
     }
@@ -113,23 +111,23 @@ const App = () => {
   }
 
   // ----------------for the second list-------------------------
-  // let [current_list2, update_list2] = React.useState(list2)
+  let [current_list2, update_list2] = React.useState(list2)
 
-  // const deleteStudent2 = (event) => {
-  //   console.log("deleting: ", event.target.value)
-  //   let newList2 = []
-  //   for(let i = 0, j = 0; i < current_list2.length; i++){
-  //     if (i == event.target.value){
-  //       console.log("skip ", i)
-  //       continue
-  //     }
-  //     else{
-  //       newList2[j] = current_list2[i]
-  //       j++
-  //     }
-  //   }
-  //   update_list2(newList2)
-  // }
+  const deleteStudent2 = (event) => {
+    console.log("deleting: ", event.target.value)
+    let newList2 = []
+    for(let i = 0, j = 0; i < current_list2.length; i++){
+      if (i == event.target.value){
+        console.log("skip ", i)
+        continue
+      }
+      else{
+        newList2[j] = current_list2[i]
+        j++
+      }
+    }
+    update_list2(newList2)
+  }
 
 
   return(
@@ -142,9 +140,9 @@ const App = () => {
 
       <p>you are search for <strong><u>{search}</u></strong></p> 
       <div>
-        <Student onRemove={deleteStudent(current_list)} list={current_list}/>
+        <Student onRemove={deleteStudent} list={current_list}/>
         <hr />
-        <Student onRemove={deleteStudent(current_list2)} list={current_list2}/>
+        <Student onRemove={deleteStudent2} list={current_list2}/>
       </div>
       <div>
         
