@@ -37,6 +37,13 @@ const App = () => {
       class: 3,
       roll_number: 4,
       marks: 95,
+    },
+    {
+      id: '6',
+      name: 'Samir',
+      class: 3,
+      roll_number: 4,
+      marks: 95,
     }
   ];
   const list2 = [
