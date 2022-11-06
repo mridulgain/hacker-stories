@@ -142,8 +142,11 @@ const App = () => {
     <div>
       <h1 class="heading">LIST OF STUDENTS</h1>
       <p>You clicked {count} number of times</p>
-      <button type="button" onClick={ () => set_count(count+1)}>up the count</button>
-
+      <div>
+        <button type="button" onClick={ () => set_count(count+1)}>up the count</button>
+        <button type="button" onClick={ () => set_count(count-1)}>low the count</button>
+      </div>
+      <br/>
       <input type="text" onChange={handleSearch}></input>
 
       <p>you are search for <strong><u>{search}</u></strong></p> 
