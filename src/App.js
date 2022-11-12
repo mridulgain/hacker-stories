@@ -94,6 +94,10 @@ const App = () => {
 
   let [current_list, update_list] = React.useState(list)
 
+  const resetList_1 = () => {
+    update_list(list)
+  }
+
   const deleteStudent = (event) => {
     console.log("deleting: ", event.target.value)
     let newList = []
@@ -112,6 +116,10 @@ const App = () => {
 
   // ----------------for the second list-------------------------
   let [current_list2, update_list2] = React.useState(list2)
+  
+  const resetList_2 = () => {
+    update_list2(list2)
+  }
 
   const deleteStudent2 = (event) => {
     console.log("deleting: ", event.target.value)
@@ -134,15 +142,20 @@ const App = () => {
     <div>
       <h1 class="heading">LIST OF STUDENTS</h1>
       <p>You clicked {count} number of times</p>
-      <button type="button" onClick={ () => set_count(count+1)}>up the count</button>
-
+      <div>
+        <button type="button" onClick={ () => set_count(count+1)}>up the count</button>
+        <button type="button" onClick={ () => set_count(count-1)}>low the count</button>
+      </div>
+      <br/>
       <input type="text" onChange={handleSearch}></input>
 
       <p>you are search for <strong><u>{search}</u></strong></p> 
       <div>
         <Student onRemove={deleteStudent} list={current_list}/>
+        <button type='button' onClick={resetList_1}>Reset1</button>
         <hr />
         <Student onRemove={deleteStudent2} list={current_list2}/>
+        <button type='button' onClick={resetList_2}>Reset2</button>
       </div>
       <div>
         
