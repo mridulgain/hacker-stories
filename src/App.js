@@ -83,14 +83,12 @@ const App = () => {
       marks: 97,
     },
   ];
-
-  const [count, set_count] = React.useState(0)
-
   const [search, set_search] = React.useState('')
 
   const handleSearch = (event) => {
     set_search(event.target.value)
   }
+
 
   let [current_list, update_list] = React.useState(list)
 
@@ -141,15 +139,9 @@ const App = () => {
   return(
     <div>
       <h1 class="heading">LIST OF STUDENTS</h1>
-      <p>You clicked {count} number of times</p>
-      <div>
-        <button type="button" onClick={ () => set_count(count+1)}>up the count</button>
-        <button type="button" onClick={ () => set_count(count-1)}>low the count</button>
-      </div>
+      <Count />
       <br/>
-      <input type="text" onChange={handleSearch}></input>
-
-      <p>you are search for <strong><u>{search}</u></strong></p> 
+      <Search search={search} onSearch={handleSearch} />
       <div>
         <Student onRemove={deleteStudent} list={current_list}/>
         <button type='button' onClick={resetList_1}>Reset1</button>
@@ -164,17 +156,38 @@ const App = () => {
   )
 }
 
-const Student = (props) => {
+const Count = () => {
+  const [count, set_count] = React.useState(0)
+  return(
+    <div>
+      <p>You clicked {count} number of times</p>
+      <div>
+        <button type="button" onClick={ () => set_count(count+1)}>up the count</button>
+        <button type="button" onClick={ () => set_count(count-1)}>low the count</button>
+      </div>
+    </div>
+  )
+}
+
+const Search = ({ search, onSearch }) =>(
+  <div>
+    <input type="text" onChange={onSearch}></input>
+    <p>you are search for <strong><u>{search}</u></strong></p>
+  </div>
+)
+
+
+const Student = ({ list, onRemove }) => {
   return(
   <div>
     <ul>
-      {props.list.map((item, index) => (
+      {list.map((item, index) => (
         <li key={item.id}>
           <p>Name: {item.name}</p>
           <p>Class: {item.class}</p>
           <p>Roll_number: {item.roll_number}</p>
           <p>Marks: {item.marks}</p>
-          <button type="button" value={index} onClick={props.onRemove}>Remove</button>
+          <button type="button" value={index} onClick={onRemove}>Remove</button>
         </li>
       ))}
     </ul>
