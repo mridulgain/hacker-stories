@@ -6,42 +6,42 @@ const App = () => {
     {
       id: '1',
       name: 'Jordan Walke',
-      class: 3,
+      clas: 3,
       roll_number: 4,
       marks: 95,
     },
     {
       id: '2',
       name: 'Dan Abramov',
-      class: 2,
+      clas: 2,
       roll_number: 5,
       marks: 97,
     },
     {
       id: '3',
       name: 'Abhijai',
-      class: 3,
+      clas: 3,
       roll_number: 4,
       marks: 95,
     },
     {
       id: '4',
       name: 'sarbjit',
-      class: 3,
+      clas: 3,
       roll_number: 4,
       marks: 95,
     },
     {
       id: '5',
       name: 'guneet',
-      class: 3,
+      clas: 3,
       roll_number: 4,
       marks: 95,
     },
     {
       id: '6',
       name: 'Samir',
-      class: 3,
+      clas: 3,
       roll_number: 4,
       marks: 95,
     }
@@ -50,35 +50,35 @@ const App = () => {
     {
       id: '1',
       name: 'anshbir',
-      class: 3,
+      clas: 3,
       roll_number: 4,
       marks: 95,
     },
     {
       id: '2',
       name: 'rohan',
-      class: 2,
+      clas: 2,
       roll_number: 5,
       marks: 97,
     },
     {
       id: '3',
       name: 'sameer',
-      class: 3,
+      clas: 3,
       roll_number: 4,
       marks: 95,
     },
     {
       id: '4',
       name: 'sam',
-      class: 2,
+      clas: 2,
       roll_number: 5,
       marks: 97,
     },
     {
       id: '5',
       name: 'tiya',
-      class: 2,
+      clas: 2,
       roll_number: 5,
       marks: 97,
     },
@@ -181,9 +181,9 @@ const Student = ({ list, onRemove }) =>
 (
   <div>
     <ul>
-      {list.map((item, index) => (
-        <li key={item.id}>
-          <Item item={item} />
+      {list.map(( {id, ...item}, index ) => (
+        <li key={id}>
+          <Item {...item} />
           <button type="button" value={index} onClick={onRemove}>Remove</button>
         </li>
       ))}
@@ -191,12 +191,12 @@ const Student = ({ list, onRemove }) =>
   </div>
 );
 
-const Item = ({ item }) => (
+const Item = ({ name, clas, roll_number, marks }) => (
   <div>
-          <p>Name: {item.name}</p>
-          <p>Class: {item.class}</p>
-          <p>Roll_number: {item.roll_number}</p>
-          <p>Marks: {item.marks}</p>
+    <p>Name: {name}</p>
+    <p>Class: {clas}</p>
+    <p>Roll_number: {roll_number}</p>
+    <p>Marks: {marks}</p>
   </div>
 );
 
