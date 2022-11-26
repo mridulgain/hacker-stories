@@ -177,21 +177,27 @@ const Search = ({ search, onSearch }) =>(
 )
 
 
-const Student = ({ list, onRemove }) => {
-  return(
+const Student = ({ list, onRemove }) => 
+(
   <div>
     <ul>
       {list.map((item, index) => (
         <li key={item.id}>
-          <p>Name: {item.name}</p>
-          <p>Class: {item.class}</p>
-          <p>Roll_number: {item.roll_number}</p>
-          <p>Marks: {item.marks}</p>
+          <Item item={item} />
           <button type="button" value={index} onClick={onRemove}>Remove</button>
         </li>
       ))}
     </ul>
   </div>
-)};
+);
+
+const Item = ({ item }) => (
+  <div>
+          <p>Name: {item.name}</p>
+          <p>Class: {item.class}</p>
+          <p>Roll_number: {item.roll_number}</p>
+          <p>Marks: {item.marks}</p>
+  </div>
+);
 
 export default App;
