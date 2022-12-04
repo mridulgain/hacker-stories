@@ -89,6 +89,13 @@ const App = () => {
     set_search(event.target.value)
   }
 
+  const searchList = list.filter(student => 
+    student.name.toLowerCase().includes(search.toLowerCase())
+  );
+  const searchList2 = list2.filter(student => 
+    student.name.toLowerCase().includes(search.toLowerCase())
+  );
+
 
   let [current_list, update_list] = React.useState(list)
 
@@ -143,10 +150,10 @@ const App = () => {
       <br/>
       <Search search={search} onSearch={handleSearch} />
       <div>
-        <Student onRemove={deleteStudent} list={current_list}/>
+        <Student onRemove={deleteStudent} list={searchList}/>
         <button type='button' onClick={resetList_1}>Reset1</button>
         <hr />
-        <Student onRemove={deleteStudent2} list={current_list2}/>
+        <Student onRemove={deleteStudent2} list={searchList2}/>
         <button type='button' onClick={resetList_2}>Reset2</button>
       </div>
       <div>
@@ -175,6 +182,8 @@ const Search = ({ search, onSearch }) =>(
     <p>you are search for <strong><u>{search}</u></strong></p>
   </div>
 )
+
+
 
 
 const Student = ({ list, onRemove }) => 
