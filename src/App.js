@@ -83,7 +83,13 @@ const App = () => {
       marks: 97,
     },
   ];
-  const [search, set_search] = React.useState('')
+  const [search, set_search] = React.useState(
+    localStorage.getItem('search') || 'Jordan'
+  )
+
+  React.useEffect(() => {
+    localStorage.setItem('search', search)
+  }, [search])
 
   const handleSearch = (event) => {
     set_search(event.target.value)
@@ -178,7 +184,7 @@ const Count = () => {
 
 const Search = ({ search, onSearch }) =>(
   <div>
-    <input type="text" onChange={onSearch}></input>
+    <input type="text" onChange={onSearch} value={search}></input>
     <p>you are search for <strong><u>{search}</u></strong></p>
   </div>
 )
