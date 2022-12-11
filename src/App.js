@@ -87,19 +87,31 @@ const App = () => {
     localStorage.getItem('search') || 'Jordan'
   )
 
+  const [search2, set_search2] = React.useState(
+    localStorage.getItem('search2') || 'anshbir'
+  )
+
   React.useEffect(() => {
     localStorage.setItem('search', search)
   }, [search])
 
+  React.useEffect(() => {
+    localStorage.setItem('search2', search2)
+  }, [search2])
+
   const handleSearch = (event) => {
     set_search(event.target.value)
+  }
+
+  const handleSearch2 = (event) => {
+    set_search2(event.target.value)
   }
 
   const searchList = list.filter(student => 
     student.name.toLowerCase().includes(search.toLowerCase())
   );
   const searchList2 = list2.filter(student => 
-    student.name.toLowerCase().includes(search.toLowerCase())
+    student.name.toLowerCase().includes(search2.toLowerCase())
   );
 
 
@@ -158,7 +170,8 @@ const App = () => {
       <div>
         <Student onRemove={deleteStudent} list={searchList}/>
         <button type='button' onClick={resetList_1}>Reset1</button>
-        <hr />
+        <hr />      
+        <Search search={search2} onSearch={handleSearch2} />
         <Student onRemove={deleteStudent2} list={searchList2}/>
         <button type='button' onClick={resetList_2}>Reset2</button>
       </div>
@@ -188,9 +201,6 @@ const Search = ({ search, onSearch }) =>(
     <p>you are search for <strong><u>{search}</u></strong></p>
   </div>
 )
-
-
-
 
 const Student = ({ list, onRemove }) => 
 (
