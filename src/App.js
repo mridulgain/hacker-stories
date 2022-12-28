@@ -85,6 +85,8 @@ const App = () => {
   ];
   
   let [current_list, update_list] = React.useState(list)
+  let [current_list2, update_list2] = React.useState(list2)
+
 
   const [search, set_search] = React.useState(
     localStorage.getItem('search') || 'Jordan'
@@ -113,7 +115,8 @@ const App = () => {
   current_list = current_list.filter(student => 
     student.name.toLowerCase().includes(search.toLowerCase())
   );
-  const searchList2 = list2.filter(student => 
+
+  current_list2 = current_list2.filter(student => 
     student.name.toLowerCase().includes(search2.toLowerCase())
   );
 
@@ -138,7 +141,6 @@ const App = () => {
   }
 
   // ----------------for the second list-------------------------
-  let [current_list2, update_list2] = React.useState(list2)
   
   const resetList_2 = () => {
     update_list2(list2)
@@ -171,7 +173,7 @@ const App = () => {
         <button type='button' onClick={resetList_1}>Reset1</button>
         <hr />      
         <Search search={search2} onSearch={handleSearch2} />
-        <Student onRemove={deleteStudent2} list={searchList2}/>
+        <Student onRemove={deleteStudent2} list={current_list2}/>
         <button type='button' onClick={resetList_2}>Reset2</button>
       </div>
     </div>
