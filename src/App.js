@@ -120,46 +120,24 @@ const App = () => {
     student.name.toLowerCase().includes(search2.toLowerCase())
   );
 
-  const resetList_1 = () => {
-    update_list(list)
+  const resetList = (list, reset_func) => {
+    reset_func(list)
   }
 
-  const deleteStudent = (event) => {
-    console.log("deleting: ", event.target.value)
+  const deleteStudent = (key, list, update_func) => {
+    console.log("deleting: ", key)
     let newList = []
-    for(let i = 0, j = 0; i < current_list.length; i++){
-      if (i == event.target.value){
+    for(let i = 0, j = 0; i < list.length; i++){
+      if (i == key){
         console.log("skip ", i)
         continue
       }
       else{
-        newList[j] = current_list[i]
+        newList[j] = list[i]
         j++
       }
     }
-    update_list(newList)
-  }
-
-  // ----------------for the second list-------------------------
-  
-  const resetList_2 = () => {
-    update_list2(list2)
-  }
-
-  const deleteStudent2 = (event) => {
-    console.log("deleting: ", event.target.value)
-    let newList2 = []
-    for(let i = 0, j = 0; i < current_list2.length; i++){
-      if (i == event.target.value){
-        console.log("skip ", i)
-        continue
-      }
-      else{
-        newList2[j] = current_list2[i]
-        j++
-      }
-    }
-    update_list2(newList2)
+    update_func(newList)
   }
 
   return(
@@ -169,12 +147,12 @@ const App = () => {
       <br/>
       <Search search={search} onSearch={handleSearch} />
       <div>
-        <Student onRemove={deleteStudent} list={current_list}/>
-        <button type='button' onClick={resetList_1}>Reset1</button>
+        <Student onRemove={(event) => deleteStudent(event.target.value, current_list, update_list) } list={current_list}/>
+        <button type='button' onClick={() => resetList(list, update_list)}>Reset1</button>
         <hr />      
         <Search search={search2} onSearch={handleSearch2} />
-        <Student onRemove={deleteStudent2} list={current_list2}/>
-        <button type='button' onClick={resetList_2}>Reset2</button>
+        <Student onRemove={(event) => deleteStudent(event.target.value, current_list2, update_list2) } list={current_list2}/>
+        <button type='button' onClick={() => resetList(list2, update_list2)}>Reset2</button>
       </div>
     </div>
   )
