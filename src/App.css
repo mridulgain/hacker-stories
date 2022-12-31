@@ -1,38 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
 .App {
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  /* background-color: #ff7675; */
+  font-family: cursive;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.heading{
+  font-family: 'Rubik Vinyl', cursive;
+  margin-top: -5px;
+  padding: 10px 2px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  /* min-height: 100vh; */
+  letter-spacing: 3px;
+  font-size: 50px;
 }
 
-.App-link {
-  color: #61dafb;
+.count{
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.count li{
+  list-style-type: none;
+  text-align: center;
+  display: inline-block;
+}
+.count li:first-child{
+  margin-left: 24%;
+}
+
+.count li:last-child{
+  margin-left: 23%;
+}
+
+.count li a{
+  text-decoration: none;
+  font-size: 1.5em;
+  padding: 6px 4px;
+  margin-bottom: 2px;
+  display: inline-flex;
+  font-weight: 300;
+  letter-spacing: 0.lem;
+  text-transform: uppercase;
+  user-select: none; 
+  cursor: pointer;
+  transition: 1.1s;
+}
+
+.count li:hover a{
+  background: #000;
+  color: #fff !important;
+  border-radius: 5px;
+  color: var(--clr);
+}
+/* 
+.count:hover > li:not(:hover){
+  opacity: 0;
+} */
+
+.count-para{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0.1em;
+  font-size: 1.5em;
+}
+
+.para-span{
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 2px solid #ff7675;
+  border-left: transparent;
+  border-right: transparent;
+}
+
+hr{
+  height: 5px;
+  background-color: black;
+  border: transparent;
 }

@@ -141,12 +141,12 @@ const App = () => {
   }
 
   return(
-    <div>
+    <div className='App'>
       <h1 class="heading">LIST OF STUDENTS</h1>
       <Count />
       <br/>
-      <Search search={search} onSearch={handleSearch} />
       <div>
+        <Search search={search} onSearch={handleSearch} />
         <Student onRemove={(event) => deleteStudent(event.target.value, current_list, update_list) } list={current_list}/>
         <button type='button' onClick={() => resetList(list, update_list)}>Reset1</button>
         <hr />      
@@ -158,28 +158,37 @@ const App = () => {
   )
 }
 
+
 const Count = () => {
   const [count, set_count] = React.useState(0)
   return(
-    <div>
-      <p>You clicked {count} number of times</p>
+    <div className='count-div'>
+      <hr/>
+      <p className='count-para'>You clicked <span className='para-span'>{count}</span> number of times</p>
       <div>
-        <button type="button" onClick={ () => set_count(count+1)}>up the count</button>
-        <button type="button" onClick={ () => set_count(count-1)}>low the count</button>
+        <ul className='count'>
+          <li>
+            <a onClick={ () => set_count(count+1)}>up the count</a>
+          </li>
+          <li>
+            <a onClick={ () => set_count(count-1)}>low the count</a>
+          </li>
+        </ul>
       </div>
+      <hr/>
     </div>
   )
 }
 
 const Search = ({ search, onSearch }) =>(
-  <div>
+  <>
     <input type="text" onChange={onSearch} value={search}></input>
     <p>you are search for <strong><u>{search}</u></strong></p>
-  </div>
+  </>
 )
 
 const Student = ({ list, onRemove }) => (
-  <div>
+  <>
     <ul>
       {list.map(( {id, ...item}, index ) => (
         <li key={id}>
@@ -188,16 +197,16 @@ const Student = ({ list, onRemove }) => (
         </li>
       ))}
     </ul>
-  </div>
+  </>
 );
 
 const Item = ({ name, clas, roll_number, marks }) => (
-  <div>
+  <>
     <p>Name: {name}</p>
     <p>Class: {clas}</p>
     <p>Roll_number: {roll_number}</p>
     <p>Marks: {marks}</p>
-  </div>
+  </>
 );
 
 export default App;
