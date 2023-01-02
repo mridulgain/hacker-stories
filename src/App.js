@@ -88,21 +88,21 @@ const App = () => {
   let [current_list2, update_list2] = React.useState(list2)
 
 
-  const [search, set_search] = React.useState(
+  const [searchTerm, set_search] = React.useState(
     localStorage.getItem('search') || 'Jordan'
   )
 
-  const [search2, set_search2] = React.useState(
+  const [searchTerm2, set_search2] = React.useState(
     localStorage.getItem('search2') || 'anshbir'
   )
 
   React.useEffect(() => {
-    localStorage.setItem('search', search)
-  }, [search])
+    localStorage.setItem('search', searchTerm)
+  }, [searchTerm])
 
   React.useEffect(() => {
-    localStorage.setItem('search2', search2)
-  }, [search2])
+    localStorage.setItem('search2', searchTerm2)
+  }, [searchTerm2])
 
   const handleSearch = (event) => {
     set_search(event.target.value)
@@ -113,11 +113,11 @@ const App = () => {
   }
 
   current_list = current_list.filter(student => 
-    student.name.toLowerCase().includes(search.toLowerCase())
+    student.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   current_list2 = current_list2.filter(student => 
-    student.name.toLowerCase().includes(search2.toLowerCase())
+    student.name.toLowerCase().includes(searchTerm2.toLowerCase())
   );
 
   const resetList = (list, reset_func) => {
@@ -146,11 +146,19 @@ const App = () => {
       <Count />
       <br/>
       <div>
-        <Search search={search} onSearch={handleSearch} />
+        <MyInput
+          id="search"
+          search={searchTerm}
+          onSearch={handleSearch}
+        />
         <Student onRemove={(event) => deleteStudent(event.target.value, current_list, update_list) } list={current_list}/>
         <button type='button' onClick={() => resetList(list, update_list)}>Reset1</button>
-        <hr />      
-        <Search search={search2} onSearch={handleSearch2} />
+        <hr />
+        <MyInput
+          id="search"
+          search={searchTerm2}
+          onSearch={handleSearch2}
+        />
         <Student onRemove={(event) => deleteStudent(event.target.value, current_list2, update_list2) } list={current_list2}/>
         <button type='button' onClick={() => resetList(list2, update_list2)}>Reset2</button>
       </div>
@@ -167,11 +175,14 @@ const Count = () => {
       <p className='count-para'>You clicked <span className='para-span'>{count}</span> number of times</p>
       <div>
         <ul className='count'>
-          <li>
-            <a onClick={ () => set_count(count+1)}>up the count</a>
+        <li>
+            <a onClick={ () => set_count(count+1)}>Up the count</a>
           </li>
           <li>
-            <a onClick={ () => set_count(count-1)}>low the count</a>
+            <a onClick={ () => set_count(0)}>Reset count</a>
+          </li>
+          <li>
+            <a onClick={ () => set_count(count-1)}>Low the count</a>
           </li>
         </ul>
       </div>
@@ -180,10 +191,12 @@ const Count = () => {
   )
 }
 
-const Search = ({ search, onSearch }) =>(
+const MyInput = ({ id, search, onSearch }) =>(
   <>
-    <input type="text" onChange={onSearch} value={search}></input>
-    <p>you are search for <strong><u>{search}</u></strong></p>
+    <input id={id}
+     type="text"
+     value={search}
+     onChange={onSearch} />
   </>
 )
 

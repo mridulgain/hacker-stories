@@ -27,7 +27,8 @@
   display: inline-block;
 }
 .count li:first-child{
-  margin-left: 24%;
+  margin-left: 14%;
+  margin-right: 14%;
 }
 
 .count li:last-child{
