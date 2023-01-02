@@ -120,8 +120,9 @@ const App = () => {
     student.name.toLowerCase().includes(searchTerm2.toLowerCase())
   );
 
-  const resetList = (list, reset_func) => {
-    reset_func(list)
+  const resetlist_search = (list, reset_list, reset_search) => {
+    reset_list(list)
+    reset_search('')
   }
 
   const deleteStudent = (key, list, update_func) => {
@@ -150,17 +151,21 @@ const App = () => {
           id="search"
           search={searchTerm}
           onSearch={handleSearch}
-        />
+        >
+        <strong>Search List-1: </strong>
+        </MyInput>
         <Student onRemove={(event) => deleteStudent(event.target.value, current_list, update_list) } list={current_list}/>
-        <button type='button' onClick={() => resetList(list, update_list)}>Reset1</button>
+        <button type='button' onClick={() => resetlist_search(list, update_list, set_search)}>Reset1</button>
         <hr />
         <MyInput
           id="search"
           search={searchTerm2}
           onSearch={handleSearch2}
-        />
+        >
+        <strong>Search List-2: </strong>
+        </MyInput>
         <Student onRemove={(event) => deleteStudent(event.target.value, current_list2, update_list2) } list={current_list2}/>
-        <button type='button' onClick={() => resetList(list2, update_list2)}>Reset2</button>
+        <button type='button' onClick={() => resetlist_search(list2, update_list2, set_search2)}>Reset2</button>
       </div>
     </div>
   )
@@ -191,8 +196,10 @@ const Count = () => {
   )
 }
 
-const MyInput = ({ id, search, onSearch }) =>(
+const MyInput = ({ id, search, onSearch, children }) =>(
   <>
+    <label htmlFor={id}>{children}</label>
+
     <input id={id}
      type="text"
      value={search}
