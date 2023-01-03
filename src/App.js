@@ -85,22 +85,24 @@ const App = () => {
   ];
   
   let [current_list, update_list] = React.useState(list)
+  let [current_list2, update_list2] = React.useState(list2)
 
-  const [search, set_search] = React.useState(
+
+  const [searchTerm, set_search] = React.useState(
     localStorage.getItem('search') || 'Jordan'
   )
 
-  const [search2, set_search2] = React.useState(
+  const [searchTerm2, set_search2] = React.useState(
     localStorage.getItem('search2') || 'anshbir'
   )
 
   React.useEffect(() => {
-    localStorage.setItem('search', search)
-  }, [search])
+    localStorage.setItem('search', searchTerm)
+  }, [searchTerm])
 
   React.useEffect(() => {
-    localStorage.setItem('search2', search2)
-  }, [search2])
+    localStorage.setItem('search2', searchTerm2)
+  }, [searchTerm2])
 
   const handleSearch = (event) => {
     set_search(event.target.value)
@@ -111,95 +113,102 @@ const App = () => {
   }
 
   current_list = current_list.filter(student => 
-    student.name.toLowerCase().includes(search.toLowerCase())
-  );
-  const searchList2 = list2.filter(student => 
-    student.name.toLowerCase().includes(search2.toLowerCase())
+    student.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const resetList_1 = () => {
-    update_list(list)
+  current_list2 = current_list2.filter(student => 
+    student.name.toLowerCase().includes(searchTerm2.toLowerCase())
+  );
+
+  const resetlist_search = (list, reset_list, reset_search) => {
+    reset_list(list)
+    reset_search('')
   }
 
-  const deleteStudent = (event) => {
-    console.log("deleting: ", event.target.value)
+  const deleteStudent = (key, list, update_func) => {
+    console.log("deleting: ", key)
     let newList = []
-    for(let i = 0, j = 0; i < current_list.length; i++){
-      if (i == event.target.value){
+    for(let i = 0, j = 0; i < list.length; i++){
+      if (i == key){
         console.log("skip ", i)
         continue
       }
       else{
-        newList[j] = current_list[i]
+        newList[j] = list[i]
         j++
       }
     }
-    update_list(newList)
-  }
-
-  // ----------------for the second list-------------------------
-  let [current_list2, update_list2] = React.useState(list2)
-  
-  const resetList_2 = () => {
-    update_list2(list2)
-  }
-
-  const deleteStudent2 = (event) => {
-    console.log("deleting: ", event.target.value)
-    let newList2 = []
-    for(let i = 0, j = 0; i < current_list2.length; i++){
-      if (i == event.target.value){
-        console.log("skip ", i)
-        continue
-      }
-      else{
-        newList2[j] = current_list2[i]
-        j++
-      }
-    }
-    update_list2(newList2)
+    update_func(newList)
   }
 
   return(
-    <div>
+    <div className='App'>
       <h1 class="heading">LIST OF STUDENTS</h1>
       <Count />
       <br/>
-      <Search search={search} onSearch={handleSearch} />
       <div>
-        <Student onRemove={deleteStudent} list={current_list}/>
-        <button type='button' onClick={resetList_1}>Reset1</button>
-        <hr />      
-        <Search search={search2} onSearch={handleSearch2} />
-        <Student onRemove={deleteStudent2} list={searchList2}/>
-        <button type='button' onClick={resetList_2}>Reset2</button>
+        <MyInput
+          id="search"
+          search={searchTerm}
+          onSearch={handleSearch}
+        >
+        <strong>Search List-1: </strong>
+        </MyInput>
+        <Student onRemove={(event) => deleteStudent(event.target.value, current_list, update_list) } list={current_list}/>
+        <button type='button' onClick={() => resetlist_search(list, update_list, set_search)}>Reset1</button>
+        <hr />
+        <MyInput
+          id="search"
+          search={searchTerm2}
+          onSearch={handleSearch2}
+        >
+        <strong>Search List-2: </strong>
+        </MyInput>
+        <Student onRemove={(event) => deleteStudent(event.target.value, current_list2, update_list2) } list={current_list2}/>
+        <button type='button' onClick={() => resetlist_search(list2, update_list2, set_search2)}>Reset2</button>
       </div>
     </div>
   )
 }
+
 
 const Count = () => {
   const [count, set_count] = React.useState(0)
   return(
-    <div>
-      <p>You clicked {count} number of times</p>
+    <div className='count-div'>
+      <hr/>
+      <p className='count-para'>You clicked <span className='para-span'>{count}</span> number of times</p>
       <div>
-        <button type="button" onClick={ () => set_count(count+1)}>up the count</button>
-        <button type="button" onClick={ () => set_count(count-1)}>low the count</button>
+        <ul className='count'>
+        <li>
+            <a onClick={ () => set_count(count+1)}>Up the count</a>
+          </li>
+          <li>
+            <a onClick={ () => set_count(0)}>Reset count</a>
+          </li>
+          <li>
+            <a onClick={ () => set_count(count-1)}>Low the count</a>
+          </li>
+        </ul>
       </div>
+      <hr/>
     </div>
   )
 }
 
-const Search = ({ search, onSearch }) =>(
-  <div>
-    <input type="text" onChange={onSearch} value={search}></input>
-    <p>you are search for <strong><u>{search}</u></strong></p>
-  </div>
+const MyInput = ({ id, search, onSearch, children }) =>(
+  <>
+    <label htmlFor={id}>{children}</label>
+
+    <input id={id}
+     type="text"
+     value={search}
+     onChange={onSearch} />
+  </>
 )
 
 const Student = ({ list, onRemove }) => (
-  <div>
+  <>
     <ul>
       {list.map(( {id, ...item}, index ) => (
         <li key={id}>
@@ -208,16 +217,16 @@ const Student = ({ list, onRemove }) => (
         </li>
       ))}
     </ul>
-  </div>
+  </>
 );
 
 const Item = ({ name, clas, roll_number, marks }) => (
-  <div>
+  <>
     <p>Name: {name}</p>
     <p>Class: {clas}</p>
     <p>Roll_number: {roll_number}</p>
     <p>Marks: {marks}</p>
-  </div>
+  </>
 );
 
 export default App;
