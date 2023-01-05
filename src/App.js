@@ -151,6 +151,7 @@ const App = () => {
           id="search"
           search={searchTerm}
           onSearch={handleSearch}
+          isFocused={true}
         >
         <strong>Search List-1: </strong>
         </MyInput>
@@ -161,6 +162,7 @@ const App = () => {
           id="search"
           search={searchTerm2}
           onSearch={handleSearch2}
+          // isFocused={true}
         >
         <strong>Search List-2: </strong>
         </MyInput>
@@ -196,13 +198,14 @@ const Count = () => {
   )
 }
 
-const MyInput = ({ id, search, onSearch, children }) =>(
+const MyInput = ({ id, search, onSearch, children, isFocused }) =>(
   <>
     <label htmlFor={id}>{children}</label>
 
     <input id={id}
      type="text"
      value={search}
+     autoFocus={isFocused}
      onChange={onSearch} />
   </>
 )
